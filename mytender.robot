@@ -82,7 +82,7 @@ ${locator.questions[3].answer}    id = question[4].answer
 ${locator.questions[4].title}    id = question[4].title
 ${locator.questions[4].description}    id=question[4].description
 ${locator.questions[4].date}    id = question[4].date
-${locator.questions[4].answer}    id = question[3].answer
+${locator.questions[4].answer}    id = question[4].answer
 ${locator.cancellations[0].status}    id = cancellation-status
 ${locator.cancellations[0].reason}    id = cancellaltion-reason
 ${locator.contracts.status}    css=.contract_status
@@ -158,7 +158,6 @@ Login
     Input text    id=lots-description    ${description}
     Input text    id=lots-num    ${dgf}
     Input text    id=lots-dgfdecisionid    ${dgfDecisionID}
-    Input text    id=lots-dgfdecisiondate    ${dgfDecisionDate}
     Input text    id=lots-dgfdecisiondate    ${dgfDecisionDate}
     Input text    id = lots-ownername    ${procuringEntity_name}
     Select From List By Value    id=lots-tenderattempts    ${tenderAttempts}
