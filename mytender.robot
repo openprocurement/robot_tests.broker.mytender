@@ -1175,7 +1175,7 @@ mytender.Отримати інформацію з пропозиції шодо 
     Select from list by value    id=milestones-type    approvalProtocol
     Choose file    id=files-file    ${filepath}
     Натиснути    id=upload-milestone-document-btn
-    Sleep    120
+    Sleep    59
 
 Вказати дату прийняття наказу
     [Arguments]    ${username}    ${contract_uaid}    ${dateMet}
