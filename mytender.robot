@@ -529,21 +529,22 @@ Login
     mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     Wait Until Page Contains Element    id= create-question-btn
     Натиснути    id=create-question-btn
+    Sleep    1
     Input text    id=question-title    ${title}
     Input text    id=question-description    ${description}
     Натиснути    id= submit-question-btn
     ${description}=    Get From Dictionary    ${ARGUMENTS[2].data}    description
 
 Задати запитання на предмет
-  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${question}
-  mytender.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  Sleep    2
-  Натиснути     id = ${item_id}item
-  Sleep  3
-  Input text          id=question-title                 ${question.data.title}
-  Input text          id=question-description          ${question.data.description}
-  Натиснути     id=submit-question-btn
-  Sleep  3
+    [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${question}
+    mytender.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+    Sleep    2
+    Натиснути     id = ${item_id}item
+    Sleep  3
+    Input text          id=question-title                 ${question.data.title}
+    Input text          id=question-description          ${question.data.description}
+    Натиснути     id=submit-question-btn
+    Sleep  3
 
 Отримати інформацію про questions[${index}].title
     ${index}=    inc    ${index}
@@ -707,10 +708,10 @@ Login
     [Return]    ${tender_doc_number}
 
 Отримати кількість документів в ставці
-  [Arguments]  ${username}  ${tender_uaid}  ${bid_index}
-  mytender.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${bid_doc_number}   Get Matching Xpath Count   xpath=(//*[@id='pnAwardList']/div[last()]/div/div[1]/div/div/div[2]/table)
-  [Return]  ${bid_doc_number}
+    [Arguments]  ${username}  ${tender_uaid}  ${bid_index}
+    mytender.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+    ${bid_doc_number}   Get Matching Xpath Count   xpath=(//*[@id='pnAwardList']/div[last()]/div/div[1]/div/div/div[2]/table)
+    [Return]  ${bid_doc_number}
 
 Отримати документ
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}
@@ -817,6 +818,7 @@ Login
 Отримати інформацію про auctionParameters.dutchSteps
     [Arguments]    @{ARGUMENTS}
     ${return_value}=    Get text    id=auction-dutchSteps
+    ${return_value}=    Convert to number    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[-1].datePaid
