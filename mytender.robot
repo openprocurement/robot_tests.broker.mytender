@@ -602,6 +602,7 @@ Login
     Run Keyword If    '${amount}' != ''   Input Text    id=bids-value_amount    ${amount}
     Натиснути    id = bid-save-btn
     Натиснути    id = bid-activate-btn
+    Sleep    3
     Reload Page
 
 Скасувати цінову пропозицію
@@ -628,6 +629,7 @@ Login
     ${value}=    Convert To String    ${amount_value}
     Input Text    id=bids-value_amount    ${value}
     Натиснути    id = bid-save-btn
+    Sleep    3
     Reload Page
 
 Завантажити фінансову ліцензію
@@ -637,6 +639,7 @@ Login
     Select From List By Value    id = files-type    financialLicense
     Choose File    id = files-file    ${path}
     Натиснути    id = document-upload-btn
+    Sleep    3
     Reload Page
 
 Змінити документ в ставці
@@ -651,6 +654,7 @@ Login
     Select From List By Value    id = files-type    commercialProposal
     Choose File       id = files-file    ${ARGUMENTS[1]}
     Натиснути     id=document-upload-btn
+    Sleep    3
     Reload Page
 
 Завантажити документ в ставку
@@ -663,6 +667,7 @@ Login
     Select From List By Value    id = files-type    commercialProposal
     Choose File       id = files-file    ${ARGUMENTS[1]}
     Натиснути     id=document-upload-btn
+    Sleep    3
     Reload Page
 
 Отримати посилання на аукціон для глядача
@@ -755,6 +760,7 @@ Login
     Натиснути    id = disqualify-link
     Choose File    id = files-file    ${filepath}
     Натиснути    id=upload-disqualification-btn
+    Sleep    3
 
 Завантажити протокол аукціону
     [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${award_index}
@@ -764,6 +770,7 @@ Login
     Натиснути    id = upload-protocol-btn
     Choose File    id = files-file    ${testFilePath}
     Натиснути    id=bid-upload-protocol
+    Sleep    3
 
 Підтвердити постачальника
     [Arguments]  ${username}  ${tender_uaid}  ${award_num}
@@ -785,7 +792,8 @@ Login
     [Arguments]  ${username}  ${tender_uaid}  ${award_index}
     mytender.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
     Натиснути    id=bids[0].link
-    Wait Until Page Contains Element    id = confirm-payment-btn
+    Натиснути    id = confirm-payment-btn
+    Sleep    3
 
 Підтвердити підписання контракту
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}
@@ -805,3 +813,29 @@ Login
     Input text          id = awards-description    ${description}
     Choose File    id = files-file    ${testFilePath}
     Натиснути       id = upload-disqualification-btn
+
+Отримати інформацію про auctionParameters.dutchSteps
+    [Arguments]    @{ARGUMENTS}
+    ${return_value}=    Get text    id=auction-dutchSteps
+    [Return]    ${return_value}
+
+Отримати інформацію про contracts[-1].datePaid
+    [Arguments]    @{ARGUMENTS}
+    ${return_value}=    Get text    id='contracts-1-datePaid'
+    Log to console    ${return_value}
+    [Return]    ${return_value}
+
+Отримати інформацію про contracts[1].status
+    [Arguments]    @{ARGUMENTS}
+    ${return_value}=    Get text    id='contracts-0-status'
+    Log to console    'Статус контракта: "${return_value}"'
+    [Return]    ${return_value}
+
+Вказати дату отримання оплати
+    [Arguments]    ${username}    ${tender_uaid}    ${award_index}    ${datePaid}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0].link
+    Log to console    ${datePaid}
+    Input text    id=contract-payment-input    ${datePaid}
+    Натиснути    id=contract-payment-submit
+    Sleep    3
