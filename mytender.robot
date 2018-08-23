@@ -821,14 +821,13 @@ Login
 
 Отримати інформацію про contracts[-1].datePaid
     [Arguments]    @{ARGUMENTS}
-    ${return_value}=    Get text    id='contracts-1-datePaid'
+    ${return_value}=    Get text    id=contracts-1-datePaid
     Log to console    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[1].status
     [Arguments]    @{ARGUMENTS}
-    ${return_value}=    Get text    id='contracts-0-status'
-    Log to console    'Статус контракта: "${return_value}"'
+    ${return_value}=    Get text    id=contracts-0-status
     [Return]    ${return_value}
 
 Вказати дату отримання оплати
