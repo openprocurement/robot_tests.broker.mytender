@@ -811,24 +811,28 @@ Login
 
 Отримати інформацію про auctionParameters.dutchSteps
     [Arguments]    @{ARGUMENTS}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=auction-dutchSteps
     ${return_value}=    Convert to number    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[-1].datePaid
     [Arguments]    @{ARGUMENTS}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=contracts-1-datePaid
     Log to console    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[1].datePaid
     [Arguments]    @{ARGUMENTS}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=contracts-0-datePaid
     Log to console    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[1].status
     [Arguments]    @{ARGUMENTS}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=contracts-0-status
     [Return]    ${return_value}
 
