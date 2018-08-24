@@ -669,19 +669,13 @@ Login
 
 Отримати посилання на аукціон для глядача
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
-    Switch Browser  ${BROWSER_ALIAS}
-    Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
-    ...   Reload Page
-    ...   AND   Element Should Be Visible   id = auction-url
+    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     ${tender.data.auctionUrl}=    Get Text    id = auction-url
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
-    Switch Browser  ${BROWSER_ALIAS}
-    Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
-    ...   Reload Page
-    ...   AND   Element Should Be Visible   id = auction-url
+    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     ${tender.data.auctionUrl}=    Get Text    id = auction-url
     [Return]    ${tender.data.auctionUrl}
 
@@ -810,8 +804,6 @@ Login
     Натиснути       id = upload-disqualification-btn
 
 Отримати інформацію про auctionParameters.dutchSteps
-    [Arguments]    @{ARGUMENTS}
-    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=auction-dutchSteps
     ${return_value}=    Convert to number    ${return_value}
     [Return]    ${return_value}
