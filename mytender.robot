@@ -152,11 +152,9 @@ Login
     ${cav_id}=    Get From Dictionary    ${items[0].classification}    id
     ${quantity}=    get_quantity    ${items[0]}
     Switch Browser    ${BROWSER_ALIAS}
-    Wait Until Page Contains Element    id=cabinet    3
     Натиснути    id=cabinet
-    Wait Until Page Contains Element    id=create-auction-btn    20
     Натиснути    id=create-auction-btn
-    Wait Until Page Contains Element    id=lots-name    20
+    Wait Until Page Contains Element    id=lots-name    5
     Select From List By Value    id=lots-procurementmethodtype    ${ARGUMENTS[1].data.procurementMethodType}
     Input text    id=lots-name    ${title}
     Input text    id=lots-description    ${description}
@@ -278,12 +276,12 @@ Login
 Пошук тендера по ідентифікатору
     [Arguments]    ${username}  ${tender_uaid}
     Switch Browser    ${BROWSER_ALIAS}
-    Go to    ${USERS.users['${username}'].default_page}
-    Wait Until Page Contains Element    id = auctionssearch-main_search
+    Sleep    3
+    Натиснути    id=home-link
+    Натиснути    id = auctionssearch-main_search
     Input Text    id = auctionssearch-main_search    ${tender_uaid}
     Натиснути    id = public-search-btn
     Sleep    2
-    Wait Until Page Contains Element    id=auction-view-btn
     Натиснути    id=auction-view-btn
 
 Отримати інформацію про cancellations[0].status
@@ -324,9 +322,8 @@ Login
 
 Отримати інформацію із тендера
     [Arguments]  ${username}  ${tender_uaid}  ${fieldname}
-    Run Keyword If  '${fieldname}' == 'tenderPeriod.endDate'
-    ...  Перейти на сторінку тендера  ${username}  ${tender_uaid}
-    ${return_value}=  Run Keyword  Отримати інформацію про ${fieldname}
+    Run keyword    mytender.Перейти на сторінку тендера  ${username}  ${tender_uaid}
+    ${return_value}=  Run Keyword  mytender.Отримати інформацію про ${fieldname}
     [return]  ${return_value}
 
 Отримати текст із поля і показати на сторінці
@@ -527,7 +524,6 @@ Login
     ${title}=    Get From Dictionary    ${ARGUMENTS[2].data}    title
     ${description}=    Get From Dictionary    ${ARGUMENTS[2].data}    description
     mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
-    Wait Until Page Contains Element    id= create-question-btn
     Натиснути    id=create-question-btn
     Sleep    1
     Input text    id=question-title    ${title}
@@ -673,19 +669,13 @@ Login
 
 Отримати посилання на аукціон для глядача
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
-    Switch Browser  ${BROWSER_ALIAS}
-    Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
-    ...   Reload Page
-    ...   AND   Element Should Be Visible   id = auction-url
+    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     ${tender.data.auctionUrl}=    Get Text    id = auction-url
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
-    Switch Browser  ${BROWSER_ALIAS}
-    Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
-    ...   Reload Page
-    ...   AND   Element Should Be Visible   id = auction-url
+    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     ${tender.data.auctionUrl}=    Get Text    id = auction-url
     [Return]    ${tender.data.auctionUrl}
 
@@ -783,7 +773,6 @@ Login
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}    ${filepath}
     mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Натиснути    id = bids[0].link
-    Wait Until Page Contains Element    id = upload-contract-link
     Натиснути    id = upload-contract-link
     Choose File    id = files-file    ${filepath}
     Натиснути    id = upload-contract-btn
@@ -801,7 +790,6 @@ Login
     ${file_path}    ${file_title}    ${file_content}=    create_fake_doc
     mytender.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
     Натиснути    id = bids[0].link
-    Wait Until Page Contains Element    id = contract-signed-btn
     Натиснути    id = contract-signed-btn
     Натиснути    id = contract-signed-submit
 
@@ -816,19 +804,27 @@ Login
     Натиснути       id = upload-disqualification-btn
 
 Отримати інформацію про auctionParameters.dutchSteps
-    [Arguments]    @{ARGUMENTS}
     ${return_value}=    Get text    id=auction-dutchSteps
     ${return_value}=    Convert to number    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[-1].datePaid
     [Arguments]    @{ARGUMENTS}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=contracts-1-datePaid
+    Log to console    ${return_value}
+    [Return]    ${return_value}
+
+Отримати інформацію про contracts[1].datePaid
+    [Arguments]    @{ARGUMENTS}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    ${return_value}=    Get text    id=contracts-0-datePaid
     Log to console    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[1].status
     [Arguments]    @{ARGUMENTS}
+    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=contracts-0-status
     [Return]    ${return_value}
 
