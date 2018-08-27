@@ -151,7 +151,6 @@ Login
     ${unit}=    Get From Dictionary    ${items[0].unit}    code
     ${cav_id}=    Get From Dictionary    ${items[0].classification}    id
     ${quantity}=    get_quantity    ${items[0]}
-    Switch Browser    ${BROWSER_ALIAS}
     Натиснути    id=cabinet
     Натиснути    id=create-auction-btn
     Wait Until Page Contains Element    id=lots-name    5
@@ -181,7 +180,6 @@ Login
     Натиснути    id =publish-btn
     ${tender_id}=    Get Text    id = auction-id
     ${TENDER}=    Get Text    id= auction-id
-    log to console    ${TENDER}
     [Return]    ${TENDER}
 
 Додати предмет
@@ -275,7 +273,6 @@ Login
 
 Пошук тендера по ідентифікатору
     [Arguments]    ${username}  ${tender_uaid}
-    Switch Browser    ${BROWSER_ALIAS}
     Sleep    3
     Натиснути    id=home-link
     Натиснути    id = auctionssearch-main_search
@@ -283,6 +280,7 @@ Login
     Натиснути    id = public-search-btn
     Sleep    2
     Натиснути    id=auction-view-btn
+    Sleep    2
 
 Отримати інформацію про cancellations[0].status
     Wait Until Page Contains Element    id = cancellation-status
@@ -317,8 +315,8 @@ Login
 
 Перейти на сторінку тендера
     [Arguments]  ${username}  ${tender_uaid}
-    ${present}=  Run Keyword And Return Status  Element Should Be Visible  id = auction-status
-    Run Keyword Unless  ${present}  mytender.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    id = auction-status
+    Run Keyword Unless    ${present}    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
 
 Отримати інформацію із тендера
     [Arguments]  ${username}  ${tender_uaid}  ${fieldname}
@@ -809,30 +807,24 @@ Login
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[-1].datePaid
-    [Arguments]    @{ARGUMENTS}
-    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=contracts-1-datePaid
-    Log to console    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[1].datePaid
-    [Arguments]    @{ARGUMENTS}
-    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     ${return_value}=    Get text    id=contracts-0-datePaid
-    Log to console    ${return_value}
     [Return]    ${return_value}
 
 Отримати інформацію про contracts[1].status
-    [Arguments]    @{ARGUMENTS}
-    Run keyword    mytender.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    ${return_value}=    Get text    id=contracts-0-status
+    [Return]    ${return_value}
+
+Отримати інформацію про contracts[1].status
     ${return_value}=    Get text    id=contracts-0-status
     [Return]    ${return_value}
 
 Вказати дату отримання оплати
     [Arguments]    ${username}    ${tender_uaid}    ${award_index}    ${datePaid}
-    Run keyword    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Натиснути    id=bids[0].link
-    Log to console    ${datePaid}
     Input text    id=contract-payment-input    ${datePaid}
     Натиснути    id=contract-payment-submit
     Sleep    3
