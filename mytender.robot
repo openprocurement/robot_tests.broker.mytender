@@ -151,6 +151,7 @@ Login
     ${unit}=    Get From Dictionary    ${items[0].unit}    code
     ${cav_id}=    Get From Dictionary    ${items[0].classification}    id
     ${quantity}=    get_quantity    ${items[0]}
+    Switch Browser    ${BROWSER_ALIAS}
     Натиснути    id=cabinet
     Натиснути    id=create-auction-btn
     Wait Until Page Contains Element    id=lots-name    5
@@ -273,6 +274,7 @@ Login
 
 Пошук тендера по ідентифікатору
     [Arguments]    ${username}  ${tender_uaid}
+    Switch Browser    ${BROWSER_ALIAS}
     Sleep    3
     Натиснути    id=home-link
     Натиснути    id = auctionssearch-main_search
@@ -667,12 +669,14 @@ Login
 
 Отримати посилання на аукціон для глядача
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+    Switch Browser    ${BROWSER_ALIAS}
     mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     ${tender.data.auctionUrl}=    Get Text    id = auction-url
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+    Switch Browser    ${BROWSER_ALIAS}
     mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     ${tender.data.auctionUrl}=    Get Text    id = auction-url
     [Return]    ${tender.data.auctionUrl}
