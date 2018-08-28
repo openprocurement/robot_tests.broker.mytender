@@ -818,7 +818,7 @@ Login
     ${return_value}=    Get text    id=contracts-0-status
     [Return]    ${return_value}
 
-Отримати інформацію про contracts[1].status
+Отримати інформацію про contracts[0].status
     ${return_value}=    Get text    id=contracts-0-status
     [Return]    ${return_value}
 
