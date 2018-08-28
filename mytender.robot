@@ -317,8 +317,7 @@ Login
 
 Перейти на сторінку тендера
     [Arguments]  ${username}  ${tender_uaid}
-    ${present}=    Run Keyword And Return Status    Element Should Be Visible    id = auction-status
-    Run Keyword Unless    ${present}    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Run Keyword    mytender.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
 
 Отримати інформацію із тендера
     [Arguments]  ${username}  ${tender_uaid}  ${fieldname}
